@@ -15,7 +15,7 @@ const date = ref()
 const onwerOccupied = ref()
 const race_calc = ref()
 const usPerson = ref()
-const fail = ref()
+const message = ref()
 const age = ref()
 
 function sleep(ms) {
@@ -30,44 +30,43 @@ const predict = () => {
   else
     race_calc.value = 0
 
-  fail.value = null
+  message.value = null
   // knowledge engineering
   if (usPerson.value == 'Yes') {
-    fail.value = "Sorry, we don't accept US Persons."
+    message.value = "Sorry, we don't accept US Persons."
     return
   }
-  var salaryRate = 2/3
   
   if (onwerOccupied.value == 'Yes') {
     if (mortgage.value *0.1 > assets.value) {
-      fail.value = "Sorry, you need at least 10% of your mortgage in liquid assest."
+      message.value = "Sorry, you need at least 10% of your mortgage in liquid assest."
       return
     }
       
     if (age.value > 60) {
       if (mortgage.value > (income.value*0.3*15)) {
-        fail.value = `Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 15 years.`
+        message.value = `Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 15 years.`
         return
       }
     } else {
       if (mortgage.value > (income.value*(2/3)*15)) {
-        fail.value = `Sorry, you need to be able to amortize your mortgage with 66.6% of your salary over the course of 15 years.`
+        message.value = `Sorry, you need to be able to amortize your mortgage with 66.6% of your salary over the course of 15 years.`
         return
       }
     }
   } else {
     if (mortgage.value *0.25 > assets.value) {
-      fail.value = "Sorry, you need at least 25% of your mortgage in liquid assest."
+      message.value = "Sorry, you need at least 25% of your mortgage in liquid assest."
       return
     }
     if (age.value > 60) {
       if (mortgage.value > (income.value*0.3*10)) {
-        fail.value = `Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 15 years.`
+        message.value = `Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 15 years.`
         return
       }
     } else {
       if (mortgage.value > (income.value*(2/3)*10)) {
-        fail.value = `Sorry, you need to be able to amortize your mortgage with 66.6% of your salary over the course of 15 years.`
+        message.value = `Sorry, you need to be able to amortize your mortgage with 66.6% of your salary over the course of 15 years.`
         return
       }
     }
@@ -82,10 +81,12 @@ const predict = () => {
     success.value = true
     sleep(2000).then(() => {
       success.value = false
+      message.value = "Congratulations, you are approved!"
     })
   }
   else {
     success.value = false
+    message.value = "Sorry, you are not approved."
   }
 }
 </script>
@@ -178,11 +179,17 @@ const predict = () => {
             </div>
           </div>
         </div>
+        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-age">
+            Age
+          </label>
+          <input id="grid-age" v-model="age" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="1">
+        </div>
       </div>
       <button class="btn btn-primary" @click="predict" @submit.prevent="predict">
         click me
       </button>
-      <p>{{ fail }}</p>
+      <p>{{ message }}</p>
     </div>
   </div>
 </template>
