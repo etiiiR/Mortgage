@@ -5,71 +5,65 @@ const user = useUserStore()
 const name = $ref(user.savedName)
 
 const router = useRouter()
-const go = () => {
-  if (name)
-    router.push(`/hi/${encodeURIComponent(name)}`)
-}
 
 const predict = () => {
   const input = tf.tensor([0.00190004, 0.0, 0.0, 0.0, 1.0])
   const input2 = input.reshape([1, 5])
   const output = model.predict(input2).dataSync()
-  console.log(output)
+  if (output[0] > 0.5)
+
+    console.log('Predicted: 1')
+
+  else
+    console.log('Predicted: 0')
 }
 
-const { t } = useI18n()
+const mortgage = ref()
+const income = ref()
+const ratespread = ref()
+const race = ref()
+const date = ref()
 </script>
 
 <template>
-  <button @click="predict">
-    click me
-  </button>
+  <div class="svg-container">
+    <svg class="ft-green-tick" xmlns="http://www.w3.org/2000/svg" height="100" width="100" viewBox="0 0 48 48" aria-hidden="true">
+      <circle class="circle" fill="#5bb543" cx="24" cy="24" r="22" />
+      <path class="tick" fill="none" stroke="#FFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M14 27l5.917 4.917L34 17" />
+    </svg>
+  </div>
   <div class="flex justify-center items-center h-2xl">
-    <form class="w-full max-w-lg grid ml-12">
+    <div class="w-full max-w-lg grid ml-12">
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-            First Name
+            Mortgage value
           </label>
-          <input id="grid-first-name" class=" appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Jane">
-          <p class="text-red-500 text-xs italic">
-            Please fill out this field.
-          </p>
+          <input id="grid-first-name" v-model="mortgage" class=" appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="number" placeholder="Value">
         </div>
         <div class="w-full md:w-1/2 px-3">
           <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-            Last Name
+            Your income
           </label>
-          <input id="grid-last-name" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Doe">
+          <input id="grid-last-name" v-model="income" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="number" placeholder="Value">
         </div>
       </div>
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">
           <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-            Password
+            Rate Spread
           </label>
-          <input id="grid-password" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="password" placeholder="******************">
-          <p class="text-gray-600 dark:text-white text-xs italic">
-            Make it as long and as crazy as you'd like
-          </p>
+          <input id="grid-password" v-model="ratespread" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="number" placeholder="Value">
         </div>
       </div>
       <div class="flex flex-wrap -mx-3 mb-2">
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <label class="block uppercase tracking-wide dark:text-white text-gray-700 text-xs font-bold mb-2" for="grid-city">
-            City
-          </label>
-          <input id="grid-city" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Albuquerque">
-        </div>
-        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
-            State
-          </label>
+            White Person          </label>
           <div class="relative">
-            <select id="grid-state" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-              <option>New Mexico</option>
-              <option>Missouri</option>
-              <option>Texas</option>
+            <select id="grid-state" v-model="race" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+              <option>No</option>
+              <option>Yes</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
@@ -78,12 +72,15 @@ const { t } = useI18n()
         </div>
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
-            Zip
+            application_date_indicator
           </label>
-          <input id="grid-zip" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="90210">
+          <input id="grid-zip" v-model="date" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="1">
         </div>
       </div>
-    </form>
+      <button class="btn btn-primary" @click="predict" @submit.prevent="predict">
+        click me
+      </button>
+    </div>
   </div>
 </template>
 
@@ -91,3 +88,55 @@ const { t } = useI18n()
 meta:
   layout: home
 </route>
+
+<style scoped>
+@supports (animation: grow .5s cubic-bezier(.25, .25, .25, 1) forwards) {
+     .tick {
+        stroke-opacity: 0;
+        stroke-dasharray: 29px;
+        stroke-dashoffset: 29px;
+        animation: draw .5s cubic-bezier(.25, .25, .25, 1) forwards;
+        animation-delay: .6s
+    }
+
+    .circle {
+        fill-opacity: 0;
+        stroke: #219a00;
+        stroke-width: 16px;
+        transform-origin: center;
+        transform: scale(0);
+        animation: grow 1s cubic-bezier(.25, .25, .25, 1.25) forwards;
+    }
+}
+
+@keyframes grow {
+    60% {
+        transform: scale(.8);
+        stroke-width: 4px;
+        fill-opacity: 0;
+    }
+    100% {
+        transform: scale(.9);
+        stroke-width: 8px;
+        fill-opacity: 1;
+        fill: #219a00;
+    }
+}
+
+@keyframes draw {
+    0%, 100% { stroke-opacity: 1; }
+    100% { stroke-dashoffset: 0; }
+}
+
+// Styles
+:root {
+  --theme-color: var(--color-purple);
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>
