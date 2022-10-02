@@ -44,13 +44,13 @@ const predict = () => {
     }
       
     if (age.value > 60) {
-      if (mortgage.value > (income.value*0.3*15)) {
+      if (mortgage.value*(2/3) > (income.value*0.3*15)) {
         message.value = `Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 15 years.`
         return
       }
     } else {
-      if (mortgage.value > (income.value*(2/3)*15)) {
-        message.value = `Sorry, you need to be able to amortize your mortgage with 66.6% of your salary over the course of 15 years.`
+      if (mortgage.value*(2/3) > (income.value*15)) {
+        message.value = `Sorry, you need to be able to amortize 2/3 of your mortgage with your salary over the course of 15 years.`
         return
       }
     }
@@ -60,13 +60,13 @@ const predict = () => {
       return
     }
     if (age.value > 60) {
-      if (mortgage.value > (income.value*0.3*10)) {
-        message.value = `Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 15 years.`
+      if (mortgage.value*(2/3) > (income.value*0.3*10)) {
+        message.value = `Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 10 years.`
         return
       }
     } else {
-      if (mortgage.value > (income.value*(2/3)*10)) {
-        message.value = `Sorry, you need to be able to amortize your mortgage with 66.6% of your salary over the course of 15 years.`
+      if (mortgage.value*(2/3) > (income.value*10)) {
+        message.value = `Sorry, you need to be able to amortize 2/3 of your mortgage with your salary over the course of 10 years.`
         return
       }
     }
