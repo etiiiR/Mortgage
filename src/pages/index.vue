@@ -5,6 +5,12 @@ const user = useUserStore()
 const name = $ref(user.savedName)
 
 const router = useRouter()
+const success = ref(false)
+const mortgage = ref()
+const income = ref()
+const ratespread = ref()
+const race = ref()
+const date = ref()
 
 const mortgage = ref()
 const income = ref()
@@ -16,7 +22,14 @@ const success = ref()
 const onwerOccupied = ref()
 const fail = ref()
 
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}
+
 const predict = () => {
+  const input = tf.tensor([mortgage.value * 0.0000100002000040000804686633403828288635395438177511096000671386718750, income.value * 0.0001000100010001000132688411814463336213520960882306098937988281250000, ratespread * 0.0732064421669106901724433100753230974078178405761718750000000000000000, 1.0, date.value * 0.5000000000000000000000000000000000000000000000000000000000000000000000])
   console.log(income.value)
   if (income.value > 10) {
     fail.value = "fjjaskdsjksfdjksfdjk"
@@ -25,16 +38,24 @@ const predict = () => {
     fail.value = null
     console.log(fail.value)
   }
-  const input = tf.tensor([0.00190004, 0.0, 0.0, 0.0, 1.0])
   const input2 = input.reshape([1, 5])
   const output = model.predict(input2).dataSync()
   console.log(output)
+  if (output[0] > 0.5) {
+    success.value = true
+    sleep(2000).then(() => {
+      success.value = false
+    })
+  }
+  else {
+    success.value = false
+  }
 }
 
 </script>
 
 <template>
-  <div class="svg-container flex justify-center items-center h-2xl " @v-if="">
+  <div v-if="success" class="svg-container flex justify-center items-center  ">
     <svg class="ft-green-tick" xmlns="http://www.w3.org/2000/svg" height="100" width="100" viewBox="0 0 48 48" aria-hidden="true">
       <circle class="circle" fill="#5bb543" cx="24" cy="24" r="22" />
       <path class="tick" fill="none" stroke="#FFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M14 27l5.917 4.917L34 17" />
