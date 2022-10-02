@@ -10,10 +10,10 @@ const mortgage = ref()
 const income = ref()
 const ratespread = ref()
 const assets = ref()
-const race = ref()
+const swiss = ref()
 const date = ref()
 const onwerOccupied = ref()
-const race_calc = ref()
+const swiss_calc = ref()
 const usPerson = ref()
 const message = ref()
 const age = ref()
@@ -26,10 +26,10 @@ function sleep(ms) {
 
 const predict = () => {
   debugger
-  if (race.value === 'Yes')
-    race_calc.value = 1
+  if (swiss.value === 'Yes')
+    swiss_calc.value = 1
   else
-    race_calc.value = 0
+    swiss_calc.value = 0
 
   message.value = null
   // knowledge engineering
@@ -136,7 +136,7 @@ const predict = () => {
           <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
             Swiss Person          </label>
           <div class="relative">
-            <select id="grid-state" v-model="race" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            <select id="grid-state" v-model="swiss" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
               <option>No</option>
               <option>Yes</option>
             </select>
