@@ -15,6 +15,7 @@ const date = ref()
 const onwerOccupied = ref()
 const usPerson = ref()
 const fail = ref()
+const age = ref()
 
 function sleep(ms) {
   return new Promise((resolve) => {
@@ -23,17 +24,49 @@ function sleep(ms) {
 }
 
 const predict = () => {
-
+  fail.value = null
   // knowledge engineering
-  
-  if (income.value > 10) {
-    fail.value = "fjjaskdsjksfdjksfdjk"
-    console.log(fail.value)
-  } else {
-    fail.value = null
-    console.log(fail.value)
+  if (usPerson.value == 'Yes') {
+    fail.value = "Sorry, we don't accept US Persons."
+    return
   }
-
+  var salaryRate = 2/3
+  
+  if (onwerOccupied.value == 'Yes') {
+    if (mortgage.value *0.1 > assets.value) {
+      fail.value = "Sorry, you need at least 10% of your mortgage in liquid assest."
+      return
+    }
+      
+    if (age.value > 60) {
+      if (mortgage.value > (income.value*0.3*15)) {
+        fail.value = `Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 15 years.`
+        return
+      }
+    } else {
+      if (mortgage.value > (income.value*(2/3)*15)) {
+        fail.value = `Sorry, you need to be able to amortize your mortgage with 66.6% of your salary over the course of 15 years.`
+        return
+      }
+    }
+  } else {
+    if (mortgage.value *0.25 > assets.value) {
+      fail.value = "Sorry, you need at least 25% of your mortgage in liquid assest."
+      return
+    }
+    if (age.value > 60) {
+      if (mortgage.value > (income.value*0.3*10)) {
+        fail.value = `Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 15 years.`
+        return
+      }
+    } else {
+      if (mortgage.value > (income.value*(2/3)*10)) {
+        fail.value = `Sorry, you need to be able to amortize your mortgage with 66.6% of your salary over the course of 15 years.`
+        return
+      }
+    }
+  }
+  
 
   const input = tf.tensor([mortgage.value * 0.0000100002000040000804686633403828288635395438177511096000671386718750, income.value * 0.0001000100010001000132688411814463336213520960882306098937988281250000, ratespread * 0.0732064421669106901724433100753230974078178405761718750000000000000000, 1.0, date.value * 0.5000000000000000000000000000000000000000000000000000000000000000000000])
   const input2 = input.reshape([1, 5])
@@ -122,6 +155,12 @@ const predict = () => {
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
           </div>
+        </div>
+        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-age">
+            Age
+          </label>
+          <input id="grid-age" v-model="age" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="1">
         </div>
       </div>
       <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
