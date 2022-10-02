@@ -13,6 +13,7 @@ const assets = ref()
 const race = ref()
 const date = ref()
 const onwerOccupied = ref()
+const race_calc = ref()
 const usPerson = ref()
 const fail = ref()
 const age = ref()
@@ -24,6 +25,11 @@ function sleep(ms) {
 }
 
 const predict = () => {
+  if (race.value === 'Yes')
+    race_calc.value = 1
+  else
+    race_calc.value = 0
+
   fail.value = null
   // knowledge engineering
   if (usPerson.value == 'Yes') {
@@ -82,7 +88,6 @@ const predict = () => {
     success.value = false
   }
 }
-
 </script>
 
 <template>
@@ -143,45 +148,41 @@ const predict = () => {
           <input id="grid-zip" v-model="date" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="1">
         </div>
       </div>
-      <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-onwerOccupied">
-          Owner-occupied
-        </label>
-        <div class="relative">
-          <select id="grid-onwerOccupied" v-model="onwerOccupied" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-            <option>No</option>
-            <option>Yes</option>
-          </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-          </div>
-        </div>
+      <div class="flex flex-wrap -mx-3 mb-2">
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-          <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-age">
-            Age
+          <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-onwerOccupied">
+            Owner-occupied
           </label>
-          <input id="grid-age" v-model="age" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="1">
+          <div class="relative">
+            <select id="grid-onwerOccupied" v-model="onwerOccupied" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-        <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-us-person">
-          US-Person
-        </label>
-        <div class="relative">
-          <select id="grid-us-person" v-model="usPerson" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-            <option>No</option>
-            <option>Yes</option>
-          </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+
+        <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-us-person">
+            US-Person
+          </label>
+          <div class="relative">
+            <select id="grid-us-person" v-model="usPerson" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+              <option>No</option>
+              <option>Yes</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+            </div>
           </div>
         </div>
       </div>
-      
       <button class="btn btn-primary" @click="predict" @submit.prevent="predict">
         click me
       </button>
-      <p>{{fail}}</p>
+      <p>{{ fail }}</p>
     </div>
   </div>
 </template>
