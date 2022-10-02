@@ -13,6 +13,7 @@ const assets = ref()
 const race = ref()
 const date = ref()
 const onwerOccupied = ref()
+const usPerson = ref()
 const fail = ref()
 
 function sleep(ms) {
@@ -22,8 +23,9 @@ function sleep(ms) {
 }
 
 const predict = () => {
-  const input = tf.tensor([mortgage.value * 0.0000100002000040000804686633403828288635395438177511096000671386718750, income.value * 0.0001000100010001000132688411814463336213520960882306098937988281250000, ratespread * 0.0732064421669106901724433100753230974078178405761718750000000000000000, 1.0, date.value * 0.5000000000000000000000000000000000000000000000000000000000000000000000])
-  console.log(income.value)
+
+  // knowledge engineering
+  
   if (income.value > 10) {
     fail.value = "fjjaskdsjksfdjksfdjk"
     console.log(fail.value)
@@ -31,6 +33,9 @@ const predict = () => {
     fail.value = null
     console.log(fail.value)
   }
+
+
+  const input = tf.tensor([mortgage.value * 0.0000100002000040000804686633403828288635395438177511096000671386718750, income.value * 0.0001000100010001000132688411814463336213520960882306098937988281250000, ratespread * 0.0732064421669106901724433100753230974078178405761718750000000000000000, 1.0, date.value * 0.5000000000000000000000000000000000000000000000000000000000000000000000])
   const input2 = input.reshape([1, 5])
   const output = model.predict(input2).dataSync()
   console.log(output)
@@ -111,6 +116,20 @@ const predict = () => {
         </label>
         <div class="relative">
           <select id="grid-onwerOccupied" v-model="onwerOccupied" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            <option>No</option>
+            <option>Yes</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+          </div>
+        </div>
+      </div>
+      <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+        <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-us-person">
+          US-Person
+        </label>
+        <div class="relative">
+          <select id="grid-us-person" v-model="usPerson" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
             <option>No</option>
             <option>Yes</option>
           </select>
