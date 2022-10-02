@@ -34,45 +34,47 @@ const predict = () => {
   message.value = null
   // knowledge engineering
   if (usPerson.value == 'Yes') {
-    message.value = "Sorry, we don't accept US Persons."
+    message.value = 'Sorry, we don\'t accept US Persons.'
     return
   }
-  
+
   if (onwerOccupied.value == 'Yes') {
-    if (mortgage.value *0.1 > assets.value) {
-      message.value = "Sorry, you need at least 10% of your mortgage in liquid assest."
+    if (mortgage.value * 0.1 > assets.value) {
+      message.value = 'Sorry, you need at least 10% of your mortgage in liquid assest.'
       return
     }
-      
+
     if (age.value > 60) {
-      if (mortgage.value*(2/3) > (income.value*0.3*15)) {
-        message.value = `Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 15 years.`
-        return
-      }
-    } else {
-      if (mortgage.value*(2/3) > (income.value*15)) {
-        message.value = `Sorry, you need to be able to amortize 2/3 of your mortgage with your salary over the course of 15 years.`
+      if (mortgage.value * (2 / 3) > (income.value * 0.3 * 15)) {
+        message.value = 'Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 15 years.'
         return
       }
     }
-  } else {
-    if (mortgage.value *0.25 > assets.value) {
-      message.value = "Sorry, you need at least 25% of your mortgage in liquid assest."
-      return
-    }
-    if (age.value > 60) {
-      if (mortgage.value*(2/3) > (income.value*0.3*10)) {
-        message.value = `Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 10 years.`
-        return
-      }
-    } else {
-      if (mortgage.value*(2/3) > (income.value*10)) {
-        message.value = `Sorry, you need to be able to amortize 2/3 of your mortgage with your salary over the course of 10 years.`
+    else {
+      if (mortgage.value * (2 / 3) > (income.value * 15)) {
+        message.value = 'Sorry, you need to be able to amortize 2/3 of your mortgage with your salary over the course of 15 years.'
         return
       }
     }
   }
-  
+  else {
+    if (mortgage.value * 0.25 > assets.value) {
+      message.value = 'Sorry, you need at least 25% of your mortgage in liquid assest.'
+      return
+    }
+    if (age.value > 60) {
+      if (mortgage.value * (2 / 3) > (income.value * 0.3 * 10)) {
+        message.value = 'Sorry, you need to be able to amortize your mortgage with 30% of your salary over the course of 10 years.'
+        return
+      }
+    }
+    else {
+      if (mortgage.value * (2 / 3) > (income.value * 10)) {
+        message.value = 'Sorry, you need to be able to amortize 2/3 of your mortgage with your salary over the course of 10 years.'
+        return
+      }
+    }
+  }
 
   const input = tf.tensor([mortgage.value * 0.0000100002000040000804686633403828288635395438177511096000671386718750, income.value * 0.0001000100010001000132688411814463336213520960882306098937988281250000, ratespread.value * 0.0732064421669106901724433100753230974078178405761718750000000000000000, 1.0, date.value * 0.5000000000000000000000000000000000000000000000000000000000000000000000])
   const input2 = input.reshape([1, 5])
@@ -82,12 +84,12 @@ const predict = () => {
     success.value = true
     sleep(2000).then(() => {
       success.value = false
-      message.value = "Congratulations, you are approved!"
+      message.value = 'Congratulations, you are approved!'
     })
   }
   else {
     success.value = false
-    message.value = "Sorry, you are not approved."
+    message.value = 'Sorry, you are not approved.'
   }
 }
 </script>
@@ -132,7 +134,7 @@ const predict = () => {
       <div class="flex flex-wrap -mx-3 mb-2">
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label class="block dark:text-white uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
-            White Person          </label>
+            Swiss Person          </label>
           <div class="relative">
             <select id="grid-state" v-model="race" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
               <option>No</option>
